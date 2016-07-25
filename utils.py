@@ -64,7 +64,7 @@ def plot_PCA_3D(data, c, n_components=5):
             , data[:,combo[2]]
             , c=c
             , s=20
-            , cmap='YlOrRd'
+            , cmap='winter'
         )
         ax.view_init(elev=30, azim=45)
         ax.set_xlabel('PC%s' % (combo[0] + 1))
