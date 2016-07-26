@@ -6,11 +6,9 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 def get_dataset(paths, desc_calculator=compute_fg_2D_pharm):
-    smiles_all = set()
+    smiles_all = []
     for path in paths:
-        for smile in path:
-            smiles_all.add(smile)
-    smiles_all = list(smiles_all)
+        smiles_all.extend(path[1:-1])
 
     data_frame = pd.DataFrame(columns=['SMILES'])
     data_frame['SMILES'] = smiles_all
@@ -73,7 +71,7 @@ def plot_PCA_3D(data, c, n_components=5):
 
     plt.show()
 
-def plot_PCA_2D(data, c, n_components=5):
+def plot_PCA_2D(data, c=None, n_components=5, color='blue'):
     from itertools import combinations
 
     combos = list(combinations(range(n_components), 2))
@@ -83,13 +81,20 @@ def plot_PCA_2D(data, c, n_components=5):
 
     for idx, combo in enumerate(combos):
         ax = fig.add_subplot(len(combos) / 2, 2, idx + 1)
-        ax.scatter(
-            data[:,combo[0]]
-            , data[:,combo[1]]
-            , c=c
-            , s=20
-            , cmap='winter'
-        )
+        if c is not None:
+            ax.scatter(
+                data[:,combo[0]]
+                , data[:,combo[1]]
+                , c=c
+                , s=20
+                , cmap='winter'
+            )
+        else:
+            ax.scatter(
+                data[:,combo[0]]
+                , data[:,combo[1]]
+                , color=color
+            )
         ax.set_xlabel('PC%s' % (combo[0] + 1))
         ax.set_ylabel('PC%s' % (combo[1] + 1))
 
