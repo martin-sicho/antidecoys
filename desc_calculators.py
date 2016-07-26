@@ -40,6 +40,6 @@ def compute_fg_MACCS(smiles):
 
 def compute_fg_morgan(smiles):
     mols = [Chem.MolFromSmiles(smile) for smile in smiles]
-    fps = [AllChem.GetMorganFingerprint(mol, 2) for mol in mols]
+    fps = [AllChem.GetMorganFingerprintAsBitVect(mol, 2) for mol in mols]
     fps = np.array(fps)
     return fps, ['bit_{0}'.format(x) for x in range(len(fps[0]))]
