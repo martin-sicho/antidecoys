@@ -45,7 +45,7 @@ def plot_eigenvalues(values, n_components=5, size=(5, 5)):
     plt.bar(range(1, n_components + 1), values)
     plt.show()
 
-def plot_PCA_3D(data, c, n_components=5):
+def plot_PCA_3D(data, c=None, color='blue', n_components=5):
     from mpl_toolkits.mplot3d import Axes3D
     from itertools import combinations
 
@@ -56,14 +56,23 @@ def plot_PCA_3D(data, c, n_components=5):
 
     for idx, combo in enumerate(combos):
         ax = fig.add_subplot(len(combos) / 2, 2, idx + 1, projection='3d')
-        ax.scatter(
-            data[:,combo[0]]
-            , data[:,combo[1]]
-            , data[:,combo[2]]
-            , c=c
-            , s=20
-            , cmap='winter'
-        )
+        if c is not None:
+            ax.scatter(
+                data[:,combo[0]]
+                , data[:,combo[1]]
+                , data[:,combo[2]]
+                , c=c
+                , s=20
+                , cmap='winter'
+            )
+        else:
+            ax.scatter(
+                data[:,combo[0]]
+                , data[:,combo[1]]
+                , data[:,combo[2]]
+                , s=20
+                , color=color
+            )
         ax.view_init(elev=30, azim=45)
         ax.set_xlabel('PC%s' % (combo[0] + 1))
         ax.set_ylabel('PC%s' % (combo[1] + 1))
