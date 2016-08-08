@@ -20,9 +20,9 @@ def get_dataset(paths, desc_calculator=compute_fg_2D_pharm):
 
     return pd.concat([data_frame, descs_frame], axis=1)
 
-def read_paths(filepath):
+def read_paths(filepath, ignore_failed=True):
     paths = pickle.load(open(filepath, 'rb'))
-    return [x for x in paths if x]
+    return [x for x in paths if x] if ignore_failed else [x for x in paths]
 
 def pickle_data(data, filepath):
     pickle.dump(data, open(filepath, 'wb'))
